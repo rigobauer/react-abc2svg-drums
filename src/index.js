@@ -38,7 +38,6 @@ V:Drums stem=up
 
   render() {
     const { abcDrumsNotation, showDrumsErrors } = this.props
-
     return ( abcDrumsNotation && (
       <Abc2Svg
         abcNotation={this.abcDrumsHeader + abcDrumsNotation}
