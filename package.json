@@ -39,6 +39,8 @@
   "license": "MIT",
   "repository": "",
   "keywords": [
-    "react-component"
+    "react-component",
+    "react-abc2svg",
+    "abc2svg"
   ]
 }
