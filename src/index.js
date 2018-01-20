@@ -21,24 +21,38 @@ class Abc2SvgDrums extends PureComponent {
  </defs>
 %%endsvg
 %%map drum ^g heads=Xhead print=g       % Hi-Hat
-%%map drum ^c\' heads=Xhead print=c\'   % Crash
-%%map drum ^d\' heads=Xhead print=d\'   % Stacker
-%%map drum ^A\' heads=Xhead print=A\'   % Ride
-%%map drum ^B\' heads=Trihead print=A\' % Ride Bell
-%%map drum ^D\' heads=Trihead print=g   % Cow Bell
+%%map drum ^c' heads=Xhead print=c'   % Crash
+%%map drum ^d' heads=Xhead print=d'   % Stacker
+%%map drum ^A' heads=Xhead print=A'   % Ride
+%%map drum ^B' heads=Trihead print=A' % Ride Bell
+%%map drum ^D' heads=Trihead print=g   % Cow Bell
 %%map drum ^c heads=Xhead print=c  % Cross Stick
 %%map drum ^d, heads=Xhead print=d,  % Foot Splash
 %%voicemap drum
-X:1
-M:4/4
-L:1/16
-K:C clef=perc
-V:Drums stem=up
 `
 
   render() {
-    const { abcDrumsNotation, showDrumsErrors } = this.props
-    return ( abcDrumsNotation && (
+    const {
+      title,
+      timeSignature,
+      noteLength,
+      basicAbcDrumsNotation,
+      fullAbcDrumsNotation,
+      showDrumsErrors
+    } = this.props
+
+    const abcDrumsNotation = fullAbcDrumsNotation !== ''
+      ? fullAbcDrumsNotation
+      : basicAbcDrumsNotation && `X:1
+T:${title}
+M:${timeSignature}
+L:${noteLength}
+K:C clef=perc
+V:Drums stem=up
+${basicAbcDrumsNotation}
+`
+
+    return (abcDrumsNotation && (
       <Abc2Svg
         abcNotation={this.abcDrumsHeader + abcDrumsNotation}
         showErrors={showDrumsErrors}
@@ -49,12 +63,20 @@ V:Drums stem=up
 }
 
 Abc2SvgDrums.propTypes = {
-  abcDrumsNotation: PropTypes.string,
+  title: PropTypes.string,
+  timeSignature: PropTypes.string,
+  noteLength: PropTypes.string,
+  basicAbcDrumsNotation: PropTypes.string,
+  fullAbcDrumsNotation: PropTypes.string,
   showDrumsErrors: PropTypes.bool
 }
 
 Abc2SvgDrums.defaultProps = {
-  abcDrumsNotation: '',
+  title: '',
+  timeSignature: '4/4',
+  noteLength: '1/8',
+  basicAbcDrumsNotation: '',
+  fullAbcDrumsNotation: '',
   showDrumsErrors: false
 }
 
