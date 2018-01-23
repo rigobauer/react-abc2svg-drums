@@ -27,10 +27,11 @@ This component creates a new voicemap that adds new drum related symbols to the 
 
 ### Basic Mode
 
-You just have to specify the title, time signature, note length and drums notation, and the component will generate a single voice with that info.
+You can specify the scale, title, time signature, note length and drums notation, and the component will generate a single voice with that info.
 
 ```js
 <Abc2SvgDrums
+  scale={1.5}
   title="My Title"
   timeSignature="4/4"
   noteLength="1/16"
@@ -45,7 +46,9 @@ You have to define the whole abc notation (you can use all the extensions provid
 
 ```js
 <Abc2SvgDrums
-  fullAbcDrumsNotation={`X:1
+  fullAbcDrumsNotation={`%%pagescale 1.5
+X:1
+T:My Title
 M:4/4
 L:1/16
 K:C clef=perc
@@ -56,6 +59,8 @@ V:Drums stem=up
   showDrumsErrors
 />
 ```
+
+**IMPORTANT**: Remember that if you set the *fullAbcDrumsNotation* prop, the rest of the props will be ignored and the component will render only what's in this prop.
 
 ### Additional Props
 

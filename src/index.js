@@ -33,6 +33,7 @@ class Abc2SvgDrums extends PureComponent {
 
   render() {
     const {
+      scale,
       title,
       timeSignature,
       noteLength,
@@ -43,8 +44,8 @@ class Abc2SvgDrums extends PureComponent {
 
     const abcDrumsNotation = fullAbcDrumsNotation !== ''
       ? fullAbcDrumsNotation
-      : basicAbcDrumsNotation && `X:1
-T:${title}
+      : basicAbcDrumsNotation && `%%pagescale ${scale}
+X:1${title !== '' ? '\nT:'+title : ''}
 M:${timeSignature}
 L:${noteLength}
 K:C clef=perc
@@ -63,6 +64,7 @@ ${basicAbcDrumsNotation}
 }
 
 Abc2SvgDrums.propTypes = {
+  scale: PropTypes.number,
   title: PropTypes.string,
   timeSignature: PropTypes.string,
   noteLength: PropTypes.string,
@@ -72,6 +74,7 @@ Abc2SvgDrums.propTypes = {
 }
 
 Abc2SvgDrums.defaultProps = {
+  scale: 1,
   title: '',
   timeSignature: '4/4',
   noteLength: '1/8',

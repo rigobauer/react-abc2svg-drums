@@ -49,9 +49,10 @@ describe('Abc2SvgDrums', () => {
   })
 
 
-  it('shallow renders <Abc2SvgDrums /> in basic mode with a simple abcNotation', () => {
+  it('shallow renders <Abc2SvgDrums /> in basic mode with a simple abcNotation without Title', () => {
     const wrapper = shallow(
-      <Abc2SvgDrums 
+      <Abc2SvgDrums
+        scale={1.2}
         noteLength="1/16"
         basicAbcDrumsNotation={'[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'}
       />
@@ -61,8 +62,33 @@ describe('Abc2SvgDrums', () => {
       .to.have.length(1)
     expect(abc2svgComp.prop('abcNotation'))
       .to.equal(drumHeaders + `
+%%pagescale 1.2
 X:1
-T:
+M:4/4
+L:1/16
+K:C clef=perc
+V:Drums stem=up
+[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2
+`)
+  })
+
+  it('shallow renders <Abc2SvgDrums /> in basic mode with a simple abcNotation with Title', () => {
+    const wrapper = shallow(
+      <Abc2SvgDrums
+        scale={1.2}
+        title="My Test"
+        noteLength="1/16"
+        basicAbcDrumsNotation={'[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'}
+      />
+    )
+    const abc2svgComp = wrapper.find(Abc2Svg)
+    expect(abc2svgComp)
+      .to.have.length(1)
+    expect(abc2svgComp.prop('abcNotation'))
+      .to.equal(drumHeaders + `
+%%pagescale 1.2
+X:1
+T:My Test
 M:4/4
 L:1/16
 K:C clef=perc
@@ -76,7 +102,6 @@ V:Drums stem=up
     const wrapper = shallow(
       <Abc2SvgDrums
         fullAbcDrumsNotation={`X:1
-T:
 M:4/4
 L:1/8
 K:C clef=perc
@@ -92,7 +117,6 @@ V:Drums stem=up
     expect(abc2svgComp.prop('abcNotation'))
       .to.equal(drumHeaders + `
 X:1
-T:
 M:4/4
 L:1/8
 K:C clef=perc
@@ -105,7 +129,7 @@ V:Drums stem=up
   it('renders <Abc2SvgDrums /> in basic mode with a simple incorrect abcNotation', () => {
     const wrapper = render(<Abc2SvgDrums basicAbcDrumsNotation={'?ññ'} showDrumsErrors />)
     expect(wrapper.find('.abc2svg-errors').html())
-      .to.equal('ABC NOTATION:32:1 Error: Bad character &apos;?&apos;<br>\nABC NOTATION:32:2 Error: Not an ASCII character<br>\n')
+      .to.equal('ABC NOTATION:33:2 Error: Not an ASCII character<br>\n')
   })
 
 
