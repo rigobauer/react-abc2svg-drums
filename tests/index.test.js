@@ -32,36 +32,32 @@ const drumHeaders = `%abc
 %%map drum ^d, heads=Xhead print=d,  % Foot Splash
 %%voicemap drum`
 
-
 describe('Abc2SvgDrums', () => {
-
   it('shallow renders <Abc2SvgDrums /> with default parameters', () => {
     const wrapper = shallow(<Abc2SvgDrums />)
-    expect(wrapper.html())
-      .to.equal(null)
+    expect(wrapper.html()).to.equal(null)
   })
-
 
   it('shallow renders <Abc2SvgDrums /> with no abcDrumsNotation and showDrumsErrors option enabled', () => {
     const wrapper = shallow(<Abc2SvgDrums showDrumsErrors />)
-    expect(wrapper.html())
-      .to.equal(null)
+    expect(wrapper.html()).to.equal(null)
   })
-
 
   it('shallow renders <Abc2SvgDrums /> in basic mode with a simple abcNotation without Title', () => {
     const wrapper = shallow(
       <Abc2SvgDrums
         scale={1.2}
         noteLength="1/16"
-        basicAbcDrumsNotation={'[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'}
+        basicAbcDrumsNotation={
+          '[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'
+        }
       />
     )
     const abc2svgComp = wrapper.find(Abc2Svg)
-    expect(abc2svgComp)
-      .to.have.length(1)
-    expect(abc2svgComp.prop('abcNotation'))
-      .to.equal(drumHeaders + `
+    expect(abc2svgComp).to.have.length(1)
+    expect(abc2svgComp.prop('abcNotation')).to.equal(
+      drumHeaders +
+        `
 %%pagescale 1.2
 X:1
 M:4/4
@@ -69,7 +65,8 @@ L:1/16
 K:C clef=perc
 V:Drums stem=up
 [^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2
-`)
+`
+    )
   })
 
   it('shallow renders <Abc2SvgDrums /> in basic mode with a simple abcNotation with Title', () => {
@@ -78,14 +75,16 @@ V:Drums stem=up
         scale={1.2}
         title="My Test"
         noteLength="1/16"
-        basicAbcDrumsNotation={'[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'}
+        basicAbcDrumsNotation={
+          '[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'
+        }
       />
     )
     const abc2svgComp = wrapper.find(Abc2Svg)
-    expect(abc2svgComp)
-      .to.have.length(1)
-    expect(abc2svgComp.prop('abcNotation'))
-      .to.equal(drumHeaders + `
+    expect(abc2svgComp).to.have.length(1)
+    expect(abc2svgComp.prop('abcNotation')).to.equal(
+      drumHeaders +
+        `
 %%pagescale 1.2
 X:1
 T:My Test
@@ -94,9 +93,9 @@ L:1/16
 K:C clef=perc
 V:Drums stem=up
 [^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2
-`)
+`
+    )
   })
-
 
   it('shallow renders <Abc2SvgDrums /> in advanced mode with a simple abcNotation', () => {
     const wrapper = shallow(
@@ -107,49 +106,51 @@ L:1/8
 K:C clef=perc
 V:Drums stem=up
 [^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2
-`
-        }
+`}
       />
     )
     const abc2svgComp = wrapper.find(Abc2Svg)
-    expect(abc2svgComp)
-      .to.have.length(1)
-    expect(abc2svgComp.prop('abcNotation'))
-      .to.equal(drumHeaders + `
+    expect(abc2svgComp).to.have.length(1)
+    expect(abc2svgComp.prop('abcNotation')).to.equal(
+      drumHeaders +
+        `
 X:1
 M:4/4
 L:1/8
 K:C clef=perc
 V:Drums stem=up
 [^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2
-`)
+`
+    )
   })
-
 
   it('renders <Abc2SvgDrums /> in basic mode with a simple incorrect abcNotation', () => {
-    const wrapper = render(<Abc2SvgDrums basicAbcDrumsNotation={'?ññ'} showDrumsErrors />)
-    expect(wrapper.find('.abc2svg-errors').html())
-      .to.equal('ABC NOTATION:33:2 Error: Not an ASCII character<br>\n')
+    const wrapper = render(
+      <Abc2SvgDrums basicAbcDrumsNotation={'?ññ'} showDrumsErrors />
+    )
+    expect(wrapper.find('.abc2svg-errors').html()).to.equal(
+      'ABC NOTATION:33:2 Error: Not an ASCII character<br>\n'
+    )
   })
-
 
   it('mounts <Abc2SvgDrums /> with a simple abcNotation', () => {
     sinon.spy(Abc2SvgDrums.prototype, 'render')
     sinon.spy(Abc2Svg.prototype, 'render')
     sinon.spy(Abc2Svg.prototype, 'componentDidMount')
     sinon.spy(Abc2Svg.prototype, 'componentWillUnmount')
-    const wrapper = mount(<Abc2SvgDrums basicAbcDrumsNotation={'[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'} showDrumsErrors />)
-    expect(Abc2SvgDrums.prototype.render.callCount)
-      .to.equal(1)
-    expect(Abc2Svg.prototype.render.callCount)
-      .to.equal(2)
-    expect(Abc2Svg.prototype.componentDidMount.calledOnce)
-      .to.equal(true)
-    expect(Abc2Svg.prototype.componentWillUnmount.notCalled)
-      .to.equal(true)
+    const wrapper = mount(
+      <Abc2SvgDrums
+        basicAbcDrumsNotation={
+          '[^g2F2]^g2 [^g2c2F2]^g2 [^g2F2]^g2 [^g2c2F2]^g2'
+        }
+        showDrumsErrors
+      />
+    )
+    expect(Abc2SvgDrums.prototype.render.callCount).to.equal(1)
+    expect(Abc2Svg.prototype.render.callCount).to.equal(2)
+    expect(Abc2Svg.prototype.componentDidMount.calledOnce).to.equal(true)
+    expect(Abc2Svg.prototype.componentWillUnmount.notCalled).to.equal(true)
     wrapper.unmount()
-    expect(Abc2Svg.prototype.componentWillUnmount.calledOnce)
-      .to.equal(true)
+    expect(Abc2Svg.prototype.componentWillUnmount.calledOnce).to.equal(true)
   })
-
 })

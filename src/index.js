@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Abc2Svg from 'react-abc2svg'
 
 class Abc2SvgDrums extends PureComponent {
-
   abcDrumsHeader = `%abc
 %%linewarn 0
 %%stretchlast 1
@@ -42,10 +41,12 @@ class Abc2SvgDrums extends PureComponent {
       showDrumsErrors
     } = this.props
 
-    const abcDrumsNotation = fullAbcDrumsNotation !== ''
-      ? fullAbcDrumsNotation
-      : basicAbcDrumsNotation && `%%pagescale ${scale}
-X:1${title !== '' ? '\nT:'+title : ''}
+    const abcDrumsNotation =
+      fullAbcDrumsNotation !== ''
+        ? fullAbcDrumsNotation
+        : basicAbcDrumsNotation &&
+          `%%pagescale ${scale}
+X:1${title !== '' ? '\nT:' + title : ''}
 M:${timeSignature}
 L:${noteLength}
 K:C clef=perc
@@ -53,14 +54,15 @@ V:Drums stem=up
 ${basicAbcDrumsNotation}
 `
 
-    return (abcDrumsNotation && (
-      <Abc2Svg
-        abcNotation={this.abcDrumsHeader + abcDrumsNotation}
-        showErrors={showDrumsErrors}
-      />
-    ))
+    return (
+      abcDrumsNotation && (
+        <Abc2Svg
+          abcNotation={this.abcDrumsHeader + abcDrumsNotation}
+          showErrors={showDrumsErrors}
+        />
+      )
+    )
   }
-
 }
 
 Abc2SvgDrums.propTypes = {

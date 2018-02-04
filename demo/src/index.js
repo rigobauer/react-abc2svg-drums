@@ -26,18 +26,32 @@ V:Drums stem=up
         title: 'Demo (updated)',
         timeSignature: '4/4',
         noteLength: '1/16',
-        basicAbcDrumsNotation: '^gF[^g2F2] [^gc]F[^g2F2] ^gF[^g2F2] [^gc]F[^g2F2]|'
+        basicAbcDrumsNotation:
+          '^gF[^g2F2] [^gc]F[^g2F2] ^gF[^g2F2] [^gc]F[^g2F2]|'
       })
     }, 5000)
   }
   render() {
-    const { scale, title, timeSignature, noteLength, basicAbcDrumsNotation, fullAbcDrumsNotation } = this.state
+    const {
+      scale,
+      title,
+      timeSignature,
+      noteLength,
+      basicAbcDrumsNotation,
+      fullAbcDrumsNotation
+    } = this.state
     return (
       <div style={{ border: '1px solid black', padding: '100px' }}>
-        <Abc2SvgDrums 
-          {...{ scale, title, timeSignature, noteLength, basicAbcDrumsNotation }}
+        <Abc2SvgDrums
+          {...{
+            scale,
+            title,
+            timeSignature,
+            noteLength,
+            basicAbcDrumsNotation
+          }}
         />
-        <br/>
+        <br />
         <Abc2SvgDrums
           fullAbcDrumsNotation={fullAbcDrumsNotation}
           showDrumErrors
@@ -47,4 +61,4 @@ V:Drums stem=up
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))
